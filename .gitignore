@@ -1,1 +1,5 @@
 .venv
+GT.npy
+hazy.npy
+dehaze_autoencoder.pkl
+
