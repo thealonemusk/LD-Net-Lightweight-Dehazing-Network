@@ -1,4 +1,4 @@
-# minor_project
+# {LD-Net: Lightweight Dehazing Network Using Convolutional Autoencoder for Image Dehazing
 
 
 ## installtion for linux based compiler 
