@@ -10,6 +10,7 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 
 import matplotlib.pyplot as plt
+%matplotlib inline
 
 if torch.cuda.is_available():
     device = "cuda"
@@ -42,7 +43,6 @@ class dehazer():
             img = cv2.resize(img, (self.IMG_SIZE, self.IMG_SIZE))
             self.training_data.append(np.array(img))
         np.save(f'{self.LABEL_NAME}.npy', self.training_data)
-        
         
 REBUILD_DATA=True
 try:     
@@ -202,9 +202,7 @@ for train_orig, train_hazy in zip(train_orig_loader, train_hazy_loader):
     print('Output Dim: ',output.size())
     break
 
-
 # In order to use multi parameters with one optimizer, concat parameters after changing into list
-
 parameters = list(encoder.parameters())+ list(decoder.parameters())
 loss_func = nn.MSELoss()
 optimizer = torch.optim.Adam(parameters, lr=learning_rate)
@@ -334,28 +332,42 @@ mean_psnr = mean_psnr_srgb(ref_mat, res_mat)
 print('mean_psnr:')
 print(mean_psnr)
 
-from skimage.metrics import structural_similarity as ssim
+import numpy as np
+
+def ssim_index(img1, img2, L=255):
+    # Constants for SSIM calculation
+    C1 = (0.01 * L) ** 2
+    C2 = (0.03 * L) ** 2
+    
+    # Mean and variance of images
+    mu1 = np.mean(img1, axis=(1, 2), keepdims=True)
+    mu2 = np.mean(img2, axis=(1, 2), keepdims=True)
+    sigma1_sq = np.var(img1, axis=(1, 2), keepdims=True)
+    sigma2_sq = np.var(img2, axis=(1, 2), keepdims=True)
+    sigma12 = np.mean((img1 * img2), axis=(1, 2), keepdims=True) - mu1 * mu2
+    
+    # SSIM formula
+    num = (2 * mu1 * mu2 + C1) * (2 * sigma12 + C2)
+    den = (mu1 ** 2 + mu2 ** 2 + C1) * (sigma1_sq + sigma2_sq + C2)
+    ssim_map = num / den
+    
+    # Compute mean SSIM
+    return np.mean(ssim_map, axis=(1, 2))
 
 def mean_ssim_srgb(ref_mat, res_mat):
-    # Normalize res_mat to [0, 1]
-    res_mat = res_mat / res_mat.max()
-
-    print(f"ref_mat shape: {ref_mat.shape}, dtype: {ref_mat.dtype}, min: {ref_mat.min()}, max: {ref_mat.max()}")
-    print(f"res_mat shape: {res_mat.shape}, dtype: {res_mat.dtype}, min: {res_mat.min()}, max: {res_mat.max()}")
-
     n_blk, h, w, c = ref_mat.shape
     mean_ssim = 0
     for b in range(n_blk):
-        ref_block = ref_mat[b, :, :, :]
-        res_block = res_mat[b, :, :, :]
-        ref_block = np.reshape(ref_block, (h, w, c))
-        res_block = np.reshape(res_block, (h, w, c))
-        ssim1 = ssim(ref_block, res_block, win_size=5, gaussian_weights=False, use_sample_covariance=False,
-             multichannel=True)
+        ref_block = ref_mat[b]
+        res_block = res_mat[b]
+        ssim1 = ssim_index(ref_block, res_block)
         mean_ssim += ssim1
     return mean_ssim / n_blk
 
-# SSIM
+# Example usage
+ref_mat = np.random.rand(25, 256, 256, 3)
+res_mat = np.random.rand(25, 256, 256, 3)
 mean_ssim = mean_ssim_srgb(ref_mat, res_mat)
 print('mean_ssim:')
 print(mean_ssim)
+
