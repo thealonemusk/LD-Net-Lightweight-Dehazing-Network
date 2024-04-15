@@ -10,7 +10,7 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 
 import matplotlib.pyplot as plt
-%matplotlib inline
+# %matplotlib inline
 
 if torch.cuda.is_available():
     device = "cuda"
