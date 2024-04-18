@@ -1,4 +1,4 @@
-# {LD-Net: Lightweight Dehazing Network Using Convolutional Autoencoder for Image Dehazing
+# LD-Net: Lightweight Dehazing Network Using Convolutional Autoencoder for Image Dehazing
 
 
 ## installtion for linux based compiler 
