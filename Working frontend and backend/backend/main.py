@@ -160,12 +160,6 @@ async def dehaze_image(image: UploadFile = File(...)):
         except Exception as e:
             raise Exception(400, str(e))
         
-        # Run the model on the input image
-        # encoder_op = encoder(hazy_image)
-        # output = decoder(encoder_op)
-
-        # print("OUTPUT-----------------<><><><><><><>----------------",output)
-
         train_hazy_loader = torch.utils.data.DataLoader(dataset=input_image, batch_size=1, shuffle=False)
 
         dehazed_output = []
