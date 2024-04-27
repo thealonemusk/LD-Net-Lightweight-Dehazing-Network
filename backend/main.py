@@ -22,17 +22,14 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
-# Define the directory to store the uploaded images
 UPLOAD_DIRECTORY = "uploads"
 
-# Create the uploads directory if it doesn't exist
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
 
@@ -122,16 +119,10 @@ async def dehaze_image(image: UploadFile = File(...)):
         with open(file_path, "wb") as buffer:
             buffer.write(await image.read())
 
-        # Load the image using PIL
-        uploaded_image = Image.open(file_path)
-            
-        image_np = np.array(uploaded_image)
 
-        # Convert the NumPy array to BGR (OpenCV format)
+        uploaded_image = Image.open(file_path)            
+        image_np = np.array(uploaded_image)
         image_bgr = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
-        #for debug purpose only
-        # image.show()
-        # Define the preprocessing steps
         img=cv2.resize(image_bgr,(256,256))
 
         X_orig = torch.Tensor(img)
@@ -145,41 +136,29 @@ async def dehaze_image(image: UploadFile = File(...)):
 
         hazy_loader = torch.utils.data.DataLoader(dataset=input_image, batch_size=1)
 
-        # Iterate over batches of hazy images (only one iteration for a single image)
         for hazy_image in hazy_loader:
-            # Assuming you're using Variable from torch.autograd
-            # Convert to Variable (if necessary) and move to GPU
             hazy_image = hazy_image
 
-        #load model
         try:
-            model = torch.load(r'C:\Users\agrim\OneDrive\Desktop\minor-project\backend1\dehaze_autoencoder.pkl', map_location=torch.device('cpu'))
+            model = torch.load(r'dehaze_autoencoder.pkl', map_location=torch.device('cpu'))
             encoder = model[0]
             print("Encoder------------<><><><><>-----------",encoder)
             decoder = model[1]
         except Exception as e:
             raise Exception(400, str(e))
         
-
         train_hazy_loader = torch.utils.data.DataLoader(dataset=input_image, batch_size=1, shuffle=False)
-
         dehazed_output = []
-
-        # Iterate over batches of hazy images (only one iteration for a single image)
         for train_hazy in tqdm(train_hazy_loader):
             hazy_image = Variable(train_hazy)
 
-            # Forward pass through encoder and decoder
+        
             encoder_op = encoder(hazy_image)
             output = decoder(encoder_op)
 
-            # Detach output and move to CPU
             output = output.cpu().detach()
-
-            # Append output to list
             dehazed_output.append(output)
 
-        # Convert list of outputs to tensor
         X_dehazed = torch.stack(dehazed_output)
 
         # Reshape tensor to match desired shape
@@ -204,9 +183,8 @@ async def dehaze_image(image: UploadFile = File(...)):
         return FileResponse(temp_file_path, media_type="image/jpeg")
     
     except Exception as e:
-        raise Exception(400, str(e))
+        return {"error": str(e)}
     
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
