@@ -1,4 +1,3 @@
-
 import io
 import os
 from PIL import Image
@@ -173,14 +172,12 @@ async def dehaze_image(image: UploadFile = File(...)):
         mirror_image_horizontal = np.flip(rotated_image, axis=1)
 
         mirror_image_horizontal = (mirror_image_horizontal * 255).clip(0, 255).astype(np.uint8)
-        # Return the output image as a response stream
-        # Convert the image array to bytes
-        # Save the image to a temporary file
         temp_file_path = "uploads/temp_one_image.jpg"
         cv2.imwrite(temp_file_path, mirror_image_horizontal)
 
         # Return the image file as a response
-        return FileResponse(temp_file_path, media_type="image/jpeg")
+        # return FileResponse(temp_file_path, media_type="image/jpeg")
+        return FileResponse(temp_file_path, media_type="image/jpeg", headers={"Content-Disposition": "attachment; filename=temp_one_image.jpg"})
     
     except Exception as e:
         return {"error": str(e)}
