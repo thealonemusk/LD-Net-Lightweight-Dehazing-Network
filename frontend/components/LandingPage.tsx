@@ -38,7 +38,7 @@ export default function LandingPage() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span>Clearzz</span>
+                      <span>HazeAway</span>
                     </a>
                   </div>
                   <div className="flex flex-col gap-4 text-center md:flex-row md:items-center md:justify-between md:gap-0">
@@ -131,18 +131,18 @@ export default function LandingPage() {
                 <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:gap-16">
                   <div className="flex flex-col gap-6">
                     <h2 className="text-3xl font-black text-black dark:text-white">
-                      What is Clearzz?
+                      What is HazeAway?
                     </h2>
                     <p className="text-lg text-gray-700 dark:text-gray-300">
-                      Clearzz is a simple and easy-to-use tool that removes fog from images. It is a great tool for photographers, designers, and anyone who wants to improve the quality of their images.
+                      HazeAway is a simple and easy-to-use tool that removes fog from images. It is a great tool for photographers, designers, and anyone who wants to improve the quality of their images.
                     </p>
                   </div>
                   <div className="flex flex-col gap-6">
                     <h2 className="text-3xl font-black text-black dark:text-white">
-                      Why Clearzz?
+                      Why HazeAway?
                     </h2>
                     <p className="text-lg text-gray-700 dark:text-gray-300">
-                      Clearzz uses deep learning to remove fog from images. It is a simple process that involves uploading an image and waiting for the magic to happen.
+                      HazeAway uses deep learning to remove fog from images. It is a simple process that involves uploading an image and waiting for the magic to happen.
                     </p>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ export default function LandingPage() {
                         How it works
                       </h2>
                       <p className="text-lg text-gray-700 dark:text-gray-300">
-                        Clearzz uses a deep learning model to remove fog from images. The model is trained on a large dataset of foggy and clear images, and it is able to learn the patterns of fog and remove it from images. The process is simple and easy to use, and it can be done in just a few seconds.
+                        HazeAway uses a deep learning model to remove fog from images. The model is trained on a large dataset of foggy and clear images, and it is able to learn the patterns of fog and remove it from images. The process is simple and easy to use, and it can be done in just a few seconds.
                       </p>
                     </div>
                     <div className="flex flex-col gap-6">
@@ -260,12 +260,12 @@ export default function LandingPage() {
                   </div>
                   <div className="space-y-6">
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-400/75">
-                    Clearzz Inc
+                    HazeAway Inc
                     </h4>
                     <div className="text-sm leading-relaxed">
-                      1080 Sunshine Valley, Suite 2563
+                      Department of Computer Science , NIT Jalandhar
                       <br />
-                      San Francisco, CA 85214
+                      Jalandhar, 144008
                     </div>
                     <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-400/75">
                       Join Our Newsletter
@@ -351,7 +351,7 @@ export default function LandingPage() {
                     </a>
                   </nav>
                   <div className="text-gray-500 dark:text-gray-400/80">
-                    <span className="font-medium">Dehaze</span> ©
+                    <span className="font-medium">HazeAway</span> ©
                   </div>
                 </div>
               </div>

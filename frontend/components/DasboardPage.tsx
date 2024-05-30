@@ -1,9 +1,5 @@
 "use client";
 import { useState } from "react";
-
-
-// Headless UI 2.x for React, for more info and examples you can check out https://github.com/tailwindlabs/headlessui
-
 import Image from "next/image";
 
 export default function DashboardPage() {

@@ -57,7 +57,7 @@ export default function DashboardLayout({
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Company</span>
+              <span>HazeAway</span>
             </a>
             {/* END Brand */}
 
@@ -411,7 +411,7 @@ export default function DashboardLayout({
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="hidden sm:inline">Company</span>
+                <span className="hidden sm:inline">HazeAway</span>
               </a>
             </div>
             {/* END Center Section */}
@@ -458,7 +458,7 @@ export default function DashboardLayout({
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="hidden sm:inline">John</span>
+                  <span className="hidden sm:inline">Ashutosh</span>
                   <svg
                     className="hi-mini hi-chevron-down hidden size-5 opacity-40 sm:inline-block"
                     xmlns="http://www.w3.org/2000/svg"
@@ -663,7 +663,7 @@ export default function DashboardLayout({
                 target="_blank"
                 className="font-medium text-teal-600 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300"
               >
-                agrim
+                Ashutosh
               </a>{" "}
               ©
             </div>
@@ -688,7 +688,7 @@ export default function DashboardLayout({
                   target="_blank"
                   className="font-medium text-teal-600 hover:text-teal-400 dark:text-teal-400 dark:hover:text-teal-300"
                 >
-                  agrim
+                  Ashutosh
                 </a>
               </span>
             </div>
